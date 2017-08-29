@@ -2,3 +2,8 @@
 pkg
 .idea/
 .yardoc
+
+## Environment normalization:
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
