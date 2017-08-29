@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/noboru-i/danger-checkstyle_format.svg?branch=master)](https://travis-ci.org/noboru-i/danger-checkstyle_format)
+
 # danger-checkstyle_format
 
-A description of danger-checkstyle_format.
+Danger plugin for checkstyle formatted xml file.
 
 ## Installation
 
@@ -8,8 +10,10 @@ A description of danger-checkstyle_format.
 
 ## Usage
 
-    Methods and attributes from this plugin are available in
-    your `Dangerfile` under the `checkstyle_format` namespace.
+<blockquote>Parse the XML file, and let the plugin do your reporting
+  <pre>
+checkstyle_format.report "/path/to/output.xml"</pre>
+</blockquote>
 
 ## Development
 
