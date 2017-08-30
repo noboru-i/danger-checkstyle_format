@@ -9,26 +9,33 @@ module Danger
     describe "with Dangerfile" do
       before do
         @dangerfile = testing_dangerfile
-        @my_plugin = @dangerfile.checkstyle_format
+        @checkstyle_format = @dangerfile.checkstyle_format
       end
 
-      # it "Warns on a monday" do
-      #   monday_date = Date.parse("2016-07-11")
-      #   allow(Date).to receive(:today).and_return monday_date
-      #
-      #   @my_plugin.warn_on_mondays
-      #
-      #   expect(@dangerfile.status_report[:warnings]).to eq(["Trying to merge code on a Monday"])
-      # end
-      #
-      # it "Does nothing on a tuesday" do
-      #   monday_date = Date.parse("2016-07-12")
-      #   allow(Date).to receive(:today).and_return monday_date
-      #
-      #   @my_plugin.warn_on_mondays
-      #
-      #   expect(@dangerfile.status_report[:warnings]).to eq([])
-      # end
+      describe ".parse" do
+        subject(:errors) { @checkstyle_format.send(:parse, "spec/fixtures/checkstyle.xml") }
+        it "have 4 items" do
+          expect(errors.size).to be 4
+        end
+
+        it "is mapped CheckstyleError about index is 0" do
+          expect(errors[0].file_name).to eq("/path/to/XXX.java")
+          expect(errors[0].line).to eq(0)
+          expect(errors[0].column).to be_nil
+          expect(errors[0].severity).to eq("error")
+          expect(errors[0].message).to eq("File does not end with a newline.")
+          expect(errors[0].source).to eq("com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck")
+        end
+
+        it "is mapped CheckstyleError about index is 2" do
+          expect(errors[2].file_name).to eq("/path/to/YYY.java")
+          expect(errors[2].line).to eq(12)
+          expect(errors[2].column).to eq(13)
+          expect(errors[2].severity).to eq("error")
+          expect(errors[2].message).to eq("Name 'enableOcr' must match pattern '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.")
+          expect(errors[2].source).to eq("com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck")
+        end
+      end
     end
   end
 end
