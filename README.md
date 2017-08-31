@@ -12,7 +12,8 @@ Danger plugin for checkstyle formatted xml file.
 
 <blockquote>Parse the XML file, and let the plugin do your reporting
   <pre>
-checkstyle_format.report "/path/to/output.xml"</pre>
+checkstyle_format.base_path = Dir.pwd
+checkstyle_format.report 'app/build/reports/checkstyle/checkstyle.xml'</pre>
 </blockquote>
 
 ## Development

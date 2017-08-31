@@ -3,7 +3,8 @@ module Danger
   #
   # @example Parse the XML file, and let the plugin do your reporting
   #
-  #          checkstyle_format.report
+  #          checkstyle_format.base_path = Dir.pwd
+  #          checkstyle_format.report 'app/build/reports/checkstyle/checkstyle.xml'
   #
   # @see  noboru-i/danger-checkstyle_format
   # @tags lint, reporting
