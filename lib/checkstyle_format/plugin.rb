@@ -22,8 +22,6 @@ module Danger
       raise "No checkstyle file was found at #{file}" unless File.exist? file
       errors = parse(file)
 
-      puts errors.size
-
       if inline_mode
         send_inline_comment(errors)
       else
@@ -53,9 +51,11 @@ module Danger
       present_elements = doc.nodes.first.nodes.reject do |test|
         test.nodes.empty?
       end
+      base_path_suffix = @base_path.end_with?("/") ? "" : "/"
+      base_path = @base_path + base_path_suffix
       elements = present_elements.flat_map do |parent|
         parent.nodes.map do |child|
-          CheckstyleError.generate(child, parent, @base_path)
+          CheckstyleError.generate(child, parent, base_path)
         end
       end
 
