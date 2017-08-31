@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = CheckstyleFormat::VERSION
   spec.authors       = ['noboru-i']
   spec.email         = ['ishikura.noboru@gmail.com']
-  spec.description   = %q{A short description of danger-checkstyle_format.}
-  spec.summary       = %q{A longer description of danger-checkstyle_format.}
+  spec.description   = %q{Danger plugin for checkstyle formatted xml file.}
+  spec.summary       = %q{Danger plugin for checkstyle formatted xml file.}
   spec.homepage      = 'https://github.com/noboru-i/danger-checkstyle_format'
   spec.license       = 'MIT'
 
