@@ -12,14 +12,30 @@ module Danger
         @checkstyle_format = @dangerfile.checkstyle_format
       end
 
+      describe ".send_inline_comment" do
+        it "calls certain argument" do
+          errors = [
+            DangerCheckstyleFormat::CheckstyleError.new("XXX.java", 1, nil, "error", "test message1.", "source"),
+            DangerCheckstyleFormat::CheckstyleError.new("YYY.java", 2, nil, "error", "test message2.", "source")
+          ]
+          @checkstyle_format.send(:send_inline_comment, errors)
+          expect(@checkstyle_format.status_report[:warnings]).to eq(["test message1.", "test message2."])
+          expect(@checkstyle_format.violation_report[:warnings][0]).to eq(Violation.new("test message1.", false, "XXX.java", 1))
+          expect(@checkstyle_format.violation_report[:warnings][1]).to eq(Violation.new("test message2.", false, "YYY.java", 2))
+        end
+      end
+
       describe ".parse" do
-        subject(:errors) { @checkstyle_format.send(:parse, "spec/fixtures/checkstyle.xml") }
+        subject(:errors) do
+          @checkstyle_format.base_path = "/path/to/"
+          @checkstyle_format.send(:parse, "spec/fixtures/checkstyle.xml")
+        end
         it "have 4 items" do
           expect(errors.size).to be 4
         end
 
         it "is mapped CheckstyleError about index is 0" do
-          expect(errors[0].file_name).to eq("/path/to/XXX.java")
+          expect(errors[0].file_name).to eq("XXX.java")
           expect(errors[0].line).to eq(0)
           expect(errors[0].column).to be_nil
           expect(errors[0].severity).to eq("error")
@@ -28,7 +44,7 @@ module Danger
         end
 
         it "is mapped CheckstyleError about index is 2" do
-          expect(errors[2].file_name).to eq("/path/to/YYY.java")
+          expect(errors[2].file_name).to eq("YYY.java")
           expect(errors[2].line).to eq(12)
           expect(errors[2].column).to eq(13)
           expect(errors[2].severity).to eq("error")

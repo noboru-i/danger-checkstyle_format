@@ -9,23 +9,32 @@ module Danger
   # @tags lint, reporting
   #
   class DangerCheckstyleFormat < Plugin
+    # Base path of `name` attributes in `file` tag.
+    # Defaults to nil.
+    # @return [String]
+    attr_accessor :base_path
+
     # Report checkstyle warnings
     # @return   [void]
     #
-    def report(file)
+    def report(file, inline_mode = true)
       raise "Please specify file name." if file.empty?
       raise "No checkstyle file was found at #{file}" unless File.exist? file
       errors = parse(file)
 
       puts errors.size
+
+      if inline_mode
+        send_inline_comment(errors)
+      else
+        raise "not implemented." # TODO: not implemented.
+      end
     end
 
-    private
-
     CheckstyleError = Struct.new(:file_name, :line, :column, :severity, :message, :source) do
-      def self.generate(node, parent_node)
+      def self.generate(node, parent_node, base_path)
         CheckstyleError.new(
-          parent_node[:name],
+          parent_node[:name].sub(/^#{base_path}/, ""),
           node[:line].to_i,
           node[:column].nil? ? nil : node[:column].to_i,
           node[:severity],
@@ -34,6 +43,8 @@ module Danger
         )
       end
     end
+
+    private
 
     def parse(file)
       require "ox"
@@ -44,11 +55,17 @@ module Danger
       end
       elements = present_elements.flat_map do |parent|
         parent.nodes.map do |child|
-          CheckstyleError.generate(child, parent)
+          CheckstyleError.generate(child, parent, @base_path)
         end
       end
 
       elements
+    end
+
+    def send_inline_comment(errors)
+      errors.each do |error|
+        warn(error.message, file: error.file_name, line: error.line)
+      end
     end
   end
 end
