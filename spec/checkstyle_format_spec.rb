@@ -15,8 +15,8 @@ module Danger
       describe ".send_inline_comment" do
         it "calls certain argument" do
           errors = [
-            DangerCheckstyleFormat::CheckstyleError.new("XXX.java", 1, nil, "error", "test message1.", "source"),
-            DangerCheckstyleFormat::CheckstyleError.new("YYY.java", 2, nil, "error", "test message2.", "source")
+            CheckstyleError.new("XXX.java", 1, nil, "error", "test message1.", "source"),
+            CheckstyleError.new("YYY.java", 2, nil, "error", "test message2.", "source")
           ]
           @checkstyle_format.send(:send_inline_comment, errors)
           expect(@checkstyle_format.status_report[:warnings]).to eq(["test message1.", "test message2."])
