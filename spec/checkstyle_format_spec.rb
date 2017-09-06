@@ -28,7 +28,7 @@ module Danger
       describe ".parse" do
         subject(:errors) do
           @checkstyle_format.base_path = "/path/to"
-          @checkstyle_format.send(:parse, "spec/fixtures/checkstyle.xml")
+          @checkstyle_format.send(:parse, File.read("spec/fixtures/checkstyle.xml"))
         end
         it "have 4 items" do
           expect(errors.size).to be 4
