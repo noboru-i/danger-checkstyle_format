@@ -16,6 +16,12 @@ checkstyle_format.base_path = Dir.pwd
 checkstyle_format.report 'app/build/reports/checkstyle/checkstyle.xml'</pre>
 </blockquote>
 
+<blockquote>Parse the XML text, and let the plugin do your reporting
+  <pre>
+checkstyle_format.base_path = Dir.pwd
+checkstyle_format.report_by_text '<?xml ...'</pre>
+</blockquote>
+
 ## Development
 
 1. Clone this repo
