@@ -64,17 +64,19 @@ module Danger
     end
 
     def send_comment(errors, inline_mode)
-      if inline_mode
-        send_inline_comment(errors)
-      else
-        raise "not implemented." # TODO: not implemented.
+      errors.each do |issue|
+        file = (inline_mode && issue.file_name != nil && issue.file_name) ? issue.file_name : nil
+        line = (inline_mode && issue.line != nil && issue.line > 0) ? issue.line : nil
+
+        if issue.severity == "error"
+          fail(issue.message, file: file, line: line)
+        elsif issue.severity == "warning"
+          warn(issue.message, file: file, line: line)
+        else
+          message(issue.message, file: file, line: line)
+        end
       end
     end
 
-    def send_inline_comment(errors)
-      errors.each do |error|
-        warn(error.message, file: error.file_name, line: error.line)
-      end
-    end
   end
 end
