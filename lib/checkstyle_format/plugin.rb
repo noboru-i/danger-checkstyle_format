@@ -65,8 +65,8 @@ module Danger
 
     def send_comment(errors, inline_mode)
       errors.each do |issue|
-        file = (inline_mode && issue.file_name != nil && issue.file_name) ? issue.file_name : nil
-        line = (inline_mode && issue.line != nil && issue.line > 0) ? issue.line : nil
+        file = inline_mode && !issue.file_name.nil? && issue.file_name ? issue.file_name : nil
+        line = inline_mode && !issue.line.nil? && issue.line > 0 ? issue.line : nil
 
         if issue.severity == "error"
           fail(issue.message, file: file, line: line)
@@ -77,6 +77,5 @@ module Danger
         end
       end
     end
-
   end
 end
