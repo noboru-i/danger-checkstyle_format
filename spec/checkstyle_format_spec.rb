@@ -12,16 +12,17 @@ module Danger
         @checkstyle_format = @dangerfile.checkstyle_format
       end
 
-      describe ".send_inline_comment" do
+      describe ".send_comment" do
         it "calls certain argument" do
           errors = [
             CheckstyleError.new("XXX.java", 1, nil, "error", "test message1.", "source"),
-            CheckstyleError.new("YYY.java", 2, nil, "error", "test message2.", "source")
+            CheckstyleError.new("YYY.java", 2, nil, "warning", "test message2.", "source")
           ]
-          @checkstyle_format.send(:send_inline_comment, errors)
-          expect(@checkstyle_format.status_report[:warnings]).to eq(["test message1.", "test message2."])
-          expect(@checkstyle_format.violation_report[:warnings][0]).to eq(Violation.new("test message1.", false, "XXX.java", 1))
-          expect(@checkstyle_format.violation_report[:warnings][1]).to eq(Violation.new("test message2.", false, "YYY.java", 2))
+          @checkstyle_format.send(:send_comment, errors, true)
+          expect(@checkstyle_format.status_report[:errors]).to eq(["test message1."])
+          expect(@checkstyle_format.status_report[:warnings]).to eq(["test message2."])
+          expect(@checkstyle_format.violation_report[:errors][0]).to eq(Violation.new("test message1.", false, "XXX.java", 1))
+          expect(@checkstyle_format.violation_report[:warnings][0]).to eq(Violation.new("test message2.", false, "YYY.java", 2))
         end
       end
 
