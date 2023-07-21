@@ -142,7 +142,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.3)
+  bundler (~> 2.4)
   danger-checkstyle_format!
   guard (~> 2.14)
   guard-rspec (~> 4.7)
@@ -154,4 +154,4 @@ DEPENDENCIES
   yard (~> 0.9.11)
 
 BUNDLED WITH
-   1.17.3
+   2.4.17
