@@ -19,25 +19,25 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'danger-plugin-api', '~> 1.0'
-  spec.add_runtime_dependency 'ox', '~> 2.0'
+  spec.add_runtime_dependency 'ox', '~> 2.14'
 
   # General ruby development
-  spec.add_development_dependency 'bundler', '~> 1.3'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'bundler', '~> 2.4'
+  spec.add_development_dependency 'rake', '~> 13.0'
 
   # Testing support
-  spec.add_development_dependency 'rspec', '~> 3.4'
+  spec.add_development_dependency 'rspec', '~> 3.12'
 
   # Linting code and docs
-  spec.add_development_dependency "rubocop", "~> 0.52"
-  spec.add_development_dependency "yard", "~> 0.9.11"
+  spec.add_development_dependency "rubocop", "~> 1.54"
+  spec.add_development_dependency "yard", "~> 0.9"
 
   # Makes testing easy via `bundle exec guard`
-  spec.add_development_dependency 'guard', '~> 2.14'
+  spec.add_development_dependency 'guard', '~> 2.18'
   spec.add_development_dependency 'guard-rspec', '~> 4.7'
 
   # If you want to work on older builds of ruby
-  spec.add_development_dependency 'listen', '3.0.7'
+  spec.add_development_dependency 'listen', '3.8'
 
   # This gives you the chance to run a REPL inside your tests
   # via:
