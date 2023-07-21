@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'danger-plugin-api', '~> 1.0'
-  spec.add_runtime_dependency 'ox', '~> 2.0'
+  spec.add_runtime_dependency 'ox', '~> 2.14'
 
   # General ruby development
   spec.add_development_dependency 'bundler', '~> 2.4'
